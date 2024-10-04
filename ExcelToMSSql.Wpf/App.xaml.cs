@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System.IO;
 using System.Windows;
 
 namespace ExcelToMSSql.Wpf;
@@ -34,7 +33,7 @@ public partial class App : Application
     private IServiceProvider ConfigureServices()
     {
         var services = new ServiceCollection();
-        services.AddDbContext<DatabaseContext>(options=> options.UseSqlServer(Configuration.GetConnectionString("Default")));
+        services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Default")));
         services.AddSingleton<MainWindow>();
 
         return services.BuildServiceProvider();

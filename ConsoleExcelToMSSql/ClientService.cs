@@ -1,12 +1,6 @@
-﻿using DB.Entites;
+﻿using DB.Entities;
 using Microsoft.Extensions.Logging;
 using OfficeOpenXml;
-using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ConsoleExcelToMSSql
 {
@@ -24,8 +18,9 @@ namespace ConsoleExcelToMSSql
 
             for (int row = 2; row <= rowCount; row++)
             {
-                if (!cancellationToken.IsCancellationRequested)
-                    yield return GetClientFromWorksheet(worksheet,row);
+                if (cancellationToken.IsCancellationRequested)
+                    break;
+                yield return GetClientFromWorksheet(worksheet, row);
             }
         }
         private Client GetClientFromWorksheet(ExcelWorksheet worksheet, int row)
@@ -58,7 +53,7 @@ namespace ConsoleExcelToMSSql
             }
             else
                 client.Bonus = null;
-            
+
 
             var turnoverText = worksheet.Cells[row, 12].Text;
             if (!string.IsNullOrWhiteSpace(turnoverText))

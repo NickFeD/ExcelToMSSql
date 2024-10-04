@@ -1,11 +1,10 @@
-﻿using OfficeOpenXml;
-using Microsoft.Extensions.DependencyInjection;
+﻿using CommandLine;
 using DB;
-using Microsoft.Extensions.Hosting;
-using System.Runtime.InteropServices;
-using CommandLine;
-using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using OfficeOpenXml;
 
 namespace ConsoleExcelToMSSql;
 
@@ -24,8 +23,8 @@ internal class Program
         {
             builder.Services.AddSingleton(opts.InputFiles);
         }
-        
-        var connection= builder.Configuration.GetConnectionString("Default");
+
+        var connection = builder.Configuration.GetConnectionString("Default");
 
         builder.Services.AddHostedService<Worker>();
         builder.Services.AddTransient<ClientService>();
@@ -36,10 +35,4 @@ internal class Program
 
         await host.RunAsync();
     }
-}
-
-internal class Options
-{
-    [Option('r', "read", Required = true, HelpText = "Input files to be processed.")]
-    public FileInfo InputFiles { get; set; }
 }
