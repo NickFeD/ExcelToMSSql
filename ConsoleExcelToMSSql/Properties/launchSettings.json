@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "ConsoleExcelToMSSql": {
+      "commandName": "Project",
+      "commandLineArgs": "-r \"C:\\Users\\sokol\\OneDrive\\Desktop\\Tes.xlsx\""
+    }
+  }
+}
