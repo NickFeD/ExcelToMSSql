@@ -7,15 +7,10 @@ public class DatabaseContext: DbContext
 {
     private static bool _init = false;
     public DatabaseContext()
-    {
-        Database.EnsureCreated();
-    }
+       => Database.EnsureCreated();
 
     public DatabaseContext(DbContextOptions<DatabaseContext> options)
-        : base(options)
-    {
-        Database.EnsureCreated();
-    }
+        : base(options) => Database.EnsureCreated();
 
     public DbSet<Client> Clients { get; set; }
 }
