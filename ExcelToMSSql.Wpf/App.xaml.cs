@@ -11,30 +11,16 @@ namespace ExcelToMSSql.Wpf;
 /// </summary>
 public partial class App : Application
 {
-    public App()
-    {
-        InitializeComponent();
-    }
-
-    /// <summary>
-    /// Gets the current <see cref="App"/> instance in use
-    /// </summary>
     public new static App Current => (App)Application.Current;
 
-    /// <summary>
-    /// Gets the <see cref="IServiceProvider"/> instance to resolve application services.
-    /// </summary>
     public IServiceProvider Services { get; private set; }
     public IConfiguration Configuration { get; private set; }
 
-    /// <summary>
-    /// Configures the services for the application.
-    /// </summary>
     private IServiceProvider ConfigureServices()
     {
         var services = new ServiceCollection();
         services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Default")));
-        services.AddSingleton<MainWindow>();
+        services.AddTransient<MainWindow>();
 
         return services.BuildServiceProvider();
     }
@@ -47,10 +33,9 @@ public partial class App : Application
         Configuration = builder.Build();
 
         Services = ConfigureServices();
-        Console.WriteLine(Configuration.GetConnectionString("BloggingDatabase"));
 
-        var mainWindow = Services.GetRequiredService<MainWindow>();
-        mainWindow.Show();
+        this.MainWindow = Services.GetRequiredService<MainWindow>();
+        MainWindow.Show();
     }
 
 }
